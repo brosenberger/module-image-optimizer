@@ -17,6 +17,14 @@ bin/magento module:enable BroCode_Chartee
 bin/magento setup:upgrade
 ```
 
+## Idea on how to delivery optimized images in a Magento 2 shop (or any other system)
+
+Magento 2 is slow when delivering anything where a PHP process is involved in comparison to a simple file transfer for any file directly servable via the web server. This can be utilized to separate the conversion of the optimized images and serving them. 
+
+The conversion takes place within the Magento2 environment (or any other) to determine which files need conversion and to which file they should be converted to. 
+
+The webserver utilizes internal rewrites and file checks which file needs to be served, based on the request of the user agent (browser Accept-Header). 
+
 ## Features
 
 ### Cronjob for folder scanning of images
