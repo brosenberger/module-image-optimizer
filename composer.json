@@ -1,7 +1,14 @@
 {
   "name": "brocode/module-image-optimizer",
   "version": "0.0.1",
-  "description": "N/A",
+  "license": ["MIT"],
+  "authors": [
+    {
+      "name": "Benjamin Rosenberger",
+      "email": "bensch.rosenberger@gmail.com"
+    }
+  ],
+  "description": "Magento2 Module to search for certain specified image files for conversion to other formats",
   "type": "magento2-module",
   "require": {
     "magento/framework": "*"
@@ -13,5 +20,11 @@
     "psr-4": {
       "BroCode\\ImageOptimizer\\": ""
     }
-  }
+  },
+  "funding": [
+    {
+      "type": "By me a coffee",
+      "url": "https://www.buymeacoffee.com/brosenberger"
+    }
+  ]
 }
