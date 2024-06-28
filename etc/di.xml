@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="\BroCode\ImageOptimizer\Cron\ImageScannerConverterCron">
+        <arguments>
+            <argument name="imagePathProviders" xsi:type="array">
+                <item name="xmlConfigurable" xsi:type="object">BroCode\ImageOptimizer\Model\Data\XmlConfigurableImagePathProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="BroCode\ImageOptimizer\Model\Data\XmlConfigurableImagePathProvider">
+        <arguments>
+            <argument name="paths" xsi:type="array">
+                <item name="media" xsi:type="string">pub/media</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="BroCode\ImageOptimizer\Model\ImagePathScannerService">
+        <arguments>
+            <argument name="imageExtensions" xsi:type="array">
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="png" xsi:type="string">png</item>
+                <item name="gif" xsi:type="string">gif</item>
+            </argument>
+        </arguments>
+    </type>
+
+</config>

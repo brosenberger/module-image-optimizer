@@ -1,0 +1,17 @@
+{
+  "name": "brocode/module-image-optimizer",
+  "version": "0.0.1",
+  "description": "N/A",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "BroCode\\ImageOptimizer\\": ""
+    }
+  }
+}
