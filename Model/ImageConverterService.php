@@ -3,6 +3,7 @@
 namespace BroCode\ImageOptimizer\Model;
 
 use BroCode\ImageOptimizer\Api\Data\ImageConverterInterface;
+use BroCode\ImageOptimizer\Api\Data\ImageConvertValidationInterface;
 use Psr\Log\LoggerInterface;
 
 class ImageConverterService
@@ -11,7 +12,11 @@ class ImageConverterService
     /**
      * @var ImageConverterInterface[]
      */
-    private array $imageConverter;
+    private $imageConverter;
+    /**
+     * @var ImageConvertValidationInterface[]
+     */
+    private $imageValidator;
     /**
      * @var LoggerInterface
      */
@@ -20,10 +25,12 @@ class ImageConverterService
     /**
      * @param LoggerInterface $logger
      * @param ImageConverterInterface[] $imageConverter
+     * @param ImageConvertValidationInterface[] $imageValidator
      */
     public function __construct(
         LoggerInterface $logger,
-        $imageConverter = []
+        $imageConverter = [],
+        $imageValidator = []
     ) {
         $this->logger = $logger;
         foreach ($imageConverter as $converter) {
@@ -33,11 +40,24 @@ class ImageConverterService
             }
             $this->imageConverter[$converter->getConverterId()] = $converter;
         }
+        foreach ($imageValidator as $validator) {
+            if (!$validator instanceof ImageConvertValidationInterface) {
+                $this->logger->critical('BroCode - ImageOptimizer: All validators must implement ImageConvertValidationInterface, ' . get_class($converter) . ' does not!');
+                continue;
+            }
+            $this->imageValidator[$validator->getConverterId()] = $validator;
+        }
     }
 
     public function getImageConverterValidator($converterId = null)
     {
-        return $this->getImageConverter($converterId);
+        if ($converterId === null) {
+            return $this->imageValidator;
+        }
+        if (isset($this->imageValidator[$converterId])) {
+            return $this->imageValidator[$converterId];
+        }
+        return null;
     }
 
     public function getImageConverter($converterId = null)
