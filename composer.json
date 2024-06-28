@@ -21,6 +21,12 @@
       "BroCode\\ImageOptimizer\\": ""
     }
   },
+  "suggest": {
+    "brocode/module-image-optimizer-webp": "Adds the possibility to convert images to WEBP format",
+    "brocode/module-image-optimizer-avif": "Adds the possibility to convert images to AVIF format",
+    "brocode/module-image-optimizer-queue": "Adds the possibility to optimize images asynchronously with the internal Mysql queue",
+    "brocode/module-image-optimizer-amqp": "Adds the possibility to optimize images asynchronously with the internal Amqp (RabittMQ) queue"
+  },
   "funding": [
     {
       "type": "By me a coffee",
