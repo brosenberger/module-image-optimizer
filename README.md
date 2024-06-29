@@ -2,7 +2,7 @@
 
 This module should ease the way of adding new image formats to a Magento 2 shop without the need of adapting any templates or markups.
 
-** Goals of this module: **
+**Goals of this module:**
 * Base scanner of folders for images which might need to be served in modern formats (e.g. /pub/media)
 * Framework for adding various different converter to be extendable for any new future image formats
 
@@ -12,8 +12,8 @@ This module should ease the way of adding new image formats to a Magento 2 shop 
 ## Installation
 
 ```
-composer require brocode/module-chartee
-bin/magento module:enable BroCode_Chartee
+composer require brocode/module-image-optimizer
+bin/magento module:enable BroCode_ImageOptimizer
 bin/magento setup:upgrade
 ```
 
