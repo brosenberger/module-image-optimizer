@@ -21,9 +21,31 @@ bin/magento setup:upgrade
 
 Magento 2 is slow when delivering anything where a PHP process is involved in comparison to a simple file transfer for any file directly servable via the web server. This can be utilized to separate the conversion of the optimized images and serving them. 
 
-The conversion takes place within the Magento2 environment (or any other) to determine which files need conversion and to which file they should be converted to. 
+1) The conversion takes place within the Magento2 environment (or any other) to determine which files need conversion and to which file they should be converted to. 
 
-The webserver utilizes internal rewrites and file checks which file needs to be served, based on the request of the user agent (browser Accept-Header). 
+2) The webserver utilizes internal rewrites and file checks which file needs to be served, based on the request of the user agent (browser Accept-Header). 
+
+Following .htaccess snippet can be used to deliver WEBP images for certain directories if they do exists in addition to the original one:
+
+```
+ ############################################
+ ## if client accepts webp, rewrite image urls to use webp version
+AddType image/webp .webp
+RewriteCond %{HTTP_ACCEPT} image/webp
+RewriteCond %{REQUEST_FILENAME} (.*)\.(png|gif|jpe?g)$
+RewriteCond %{REQUEST_FILENAME}\.webp -f
+RewriteRule ^ %{REQUEST_FILENAME}\.webp [L,T=image/webp]
+```
+
+Background information for this .htaccess entry:
+* add a new mime type for webp images
+* check if the browser accepts webp images
+* check if the requested file is a png, gif or jpeg file
+* check if a webp file exists for the requested file
+* rewrite the request to the webp file
+
+The same can be done with any other image format (e.g. for AVIF use the mime type image/avif).
+
 
 ## Features
 
