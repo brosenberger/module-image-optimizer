@@ -2,14 +2,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
-    <type name="\BroCode\ImageOptimizer\Cron\ImageScannerConverterCron">
-        <arguments>
-            <argument name="imagePathProviders" xsi:type="array">
-                <item name="xmlConfigurable" xsi:type="object">BroCode\ImageOptimizer\Model\Data\XmlConfigurableImagePathProvider</item>
-            </argument>
-        </arguments>
-    </type>
-
     <type name="BroCode\ImageOptimizer\Model\Data\XmlConfigurableImagePathProvider">
         <arguments>
             <argument name="paths" xsi:type="array">
@@ -20,6 +12,9 @@
 
     <type name="BroCode\ImageOptimizer\Model\ImagePathScannerService">
         <arguments>
+            <argument name="imagePathProviders" xsi:type="array">
+                <item name="xmlConfigurable" xsi:type="object">BroCode\ImageOptimizer\Model\Data\XmlConfigurableImagePathProvider</item>
+            </argument>
             <argument name="imageExtensions" xsi:type="array">
                 <item name="jpeg" xsi:type="string">jpeg</item>
                 <item name="jpg" xsi:type="string">jpg</item>
@@ -29,4 +24,11 @@
         </arguments>
     </type>
 
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="image-optimize-scan-command" xsi:type="object">BroCode\ImageOptimizer\Command\ImageScanPathsCommand</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

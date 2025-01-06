@@ -4,4 +4,7 @@
     <event name="brocode_convert_image">
         <observer name="broCode-image-conversion-delegation-observer" instance="BroCode\ImageOptimizer\Observer\InstantConvertImageObserver"/>
     </event>
+    <event name="brocode_convert_image_listing">
+        <observer name="broCode-image-conversion-delegation-observer" instance="BroCode\ImageOptimizer\Observer\ListingConvertImageObserver"/>
+    </event>
 </config>

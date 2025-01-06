@@ -10,10 +10,6 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 class ImageScannerConverterCron
 {
     /**
-     * @var ImagePathProviderInterface[]
-     */
-    private array $imagePathProviders;
-    /**
      * @var ImagePathScannerService
      */
     private $imagePathScannerService;
@@ -23,14 +19,13 @@ class ImageScannerConverterCron
     private $scopeConfig;
 
     /**
-     * @param ImagePathProviderInterface[] $imagePathProviders
+     * @param ScopeConfigInterface $scopeConfig
+     * @param ImagePathScannerService $imagePathScannerService
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         ImagePathScannerService $imagePathScannerService,
-        array $imagePathProviders = []
     ) {
-        $this->imagePathProviders = $imagePathProviders;
         $this->imagePathScannerService = $imagePathScannerService;
         $this->scopeConfig = $scopeConfig;
     }
@@ -41,10 +36,6 @@ class ImageScannerConverterCron
             return;
         }
 
-        foreach ($this->imagePathProviders as $imagePathProvider) {
-            foreach ($imagePathProvider->getImagePaths() as $imagePath) {
-                $this->imagePathScannerService->scanPath($imagePath);
-            }
-        }
+        $this->imagePathScannerService->iteratePaths();
     }
 }

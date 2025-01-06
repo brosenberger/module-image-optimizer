@@ -59,10 +59,10 @@ The cronjob can be disabled under ```Stores -> Configuration -> Services -> BroC
 
 **Image Paths**
 
-The cron job recieves via dependency injection ``BroCode\ImageOptimizer\Api\Data\ImagePathProviderInterface`` which can provide any directory to be scanned. 
+The ImagePathScannerService recieves via dependency injection ``BroCode\ImageOptimizer\Api\Data\ImagePathProviderInterface`` which can provide any directory to be scanned. 
 
 ````xml
-<type name="\BroCode\ImageOptimizer\Cron\ImageScannerConverterCron">
+<type name="BroCode\ImageOptimizer\Model\ImagePathScannerService">
     <arguments>
         <argument name="imagePathProviders" xsi:type="array">
             <item name="xmlConfigurable" xsi:type="object">BroCode\ImageOptimizer\Model\Data\XmlConfigurableImagePathProvider</item>
@@ -81,6 +81,16 @@ One default path provider is implemented, which takes arguments via di.xml. The 
     </arguments>
 </type>
 ```
+
+### CLI commands
+
+Images Scanning (same function as cronjob + listing possibility of images to be optimized):
+```
+bin/magento images:optimize:scan
+``` 
+
+**Options:**
+* `-l | --list`: List all images that need to be optimized, file is stored in ```var/<<datetime>>_image_optimizer.log```
 
 ### Conversion Hooks
 
@@ -139,3 +149,13 @@ Though there is the default ```BroCode\ImageOptimizer\Observer\InstantConvertIma
 Consider using the extensions for the usage of the Magento 2 queue system to asynchronously process image conversion:
 * **brocode/module-image-optimizer-queue** (default MySQL queue for shops without active RabbitMQ installations)
 * **brocode/module-image-optimizer-amqp** (extension to the queue module for configurations of the RabbitMQ services)
+
+
+## Change Log
+
+**1.1.0**
+- Moved image path provider to service instead of cron job
+- added CLI command to scan/optimize images + listing of images to be optimized
+
+**1.0.0** 
+- Initial version
