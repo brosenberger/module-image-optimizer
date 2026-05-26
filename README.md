@@ -181,6 +181,9 @@ Consider using the extensions for the usage of the Magento 2 queue system to asy
 
 ## Change Log
 
+**1.1.1**
+- Document nginx WebP serving in README (Apache remains documented for legacy setups)
+
 **1.1.0**
 - Moved image path provider to service instead of cron job
 - added CLI command to scan/optimize images + listing of images to be optimized
