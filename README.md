@@ -23,9 +23,38 @@ Magento 2 is slow when delivering anything where a PHP process is involved in co
 
 1) The conversion takes place within the Magento2 environment (or any other) to determine which files need conversion and to which file they should be converted to. 
 
-2) The webserver utilizes internal rewrites and file checks which file needs to be served, based on the request of the user agent (browser Accept-Header). 
+2) The webserver utilizes internal rewrites and file checks which file needs to be served, based on the request of the user agent (browser Accept-Header).
 
-Following .htaccess snippet can be used to deliver WEBP images for certain directories if they do exists in addition to the original one:
+Converted files are stored next to the original with a suffix (e.g. `photo.jpg.webp`). Configure the web server to serve that sidecar when the client accepts the format.
+
+New Magento installations use **nginx**; Apache `.htaccess` remains for legacy setups.
+
+### Nginx (recommended)
+
+Add to the shop vhost (see Magento `nginx.conf.sample`). Place the `map` in `http {}`. Add the `location` before the generic static file location under `location /media/ {}` so it takes precedence.
+
+```
+# In http { } (once per nginx instance or included vhost file)
+map $http_accept $webp_suffix {
+    default "";
+    "~*webp" ".webp";
+}
+
+# In server { }
+location ~* ^/media/.+\.(png|gif|jpe?g)$ {
+    add_header Vary Accept;
+    try_files $uri$webp_suffix $uri $uri/ /get.php$is_args$args;
+}
+```
+
+* `map` sets `$webp_suffix` to `.webp` when the browser sends `Accept: image/webp`
+* `try_files` serves `photo.jpg.webp` when it exists, otherwise the original raster file
+* `/get.php` fallback keeps Magento catalog image generation working for missing cache files
+* `Vary: Accept` helps CDNs and browsers cache WebP and non-WebP responses separately
+
+### Apache (legacy)
+
+Add to `pub/media/.htaccess` to deliver WebP images when they exist:
 
 ```
  ############################################
@@ -37,14 +66,13 @@ RewriteCond %{REQUEST_FILENAME}\.webp -f
 RewriteRule ^ %{REQUEST_FILENAME}\.webp [L,T=image/webp]
 ```
 
-Background information for this .htaccess entry:
-* add a new mime type for webp images
-* check if the browser accepts webp images
-* check if the requested file is a png, gif or jpeg file
-* check if a webp file exists for the requested file
-* rewrite the request to the webp file
+* register the WebP mime type
+* check if the browser accepts WebP
+* check if the requested file is png, gif, or jpeg
+* check if a `.webp` sidecar exists for the requested file
+* rewrite the request to the WebP file
 
-The same can be done with any other image format (e.g. for AVIF use the mime type image/avif).
+The same pattern applies to other formats (e.g. AVIF — see `brocode/module-image-optimizer-avif`).
 
 
 ## Features
