@@ -1,6 +1,6 @@
 {
   "name": "brocode/module-image-optimizer",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": ["MIT"],
   "authors": [
     {
@@ -9,6 +9,7 @@
     }
   ],
   "description": "Magento2 Module to search for certain specified image files for conversion to other formats",
+  "homepage": "https://brocode.at/modules/module-image-optimizer/",
   "type": "magento2-module",
   "require": {
     "magento/framework": "*"
