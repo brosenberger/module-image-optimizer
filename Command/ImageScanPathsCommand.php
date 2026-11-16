@@ -41,7 +41,7 @@ class ImageScanPathsCommand extends Command
         parent::configure();
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $listing = $input->getOption('list');
 
